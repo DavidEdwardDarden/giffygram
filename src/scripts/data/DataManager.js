@@ -41,3 +41,16 @@ const loggedInUser = {
 export const getLoggedInUser = () => {
   return {...loggedInUser};
 }
+
+// method that will delete an item from the database
+export const deletePost = postId => {
+  return fetch(`http://localhost:8088/posts/${postId}`, {
+      method: "DELETE",
+      headers: {
+          "Content-Type": "application/json"
+      }
+
+  })
+      .then(response => response.json())
+      .then(getPosts)
+}

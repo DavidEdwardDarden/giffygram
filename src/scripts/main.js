@@ -5,7 +5,7 @@
 
 
 // Can you explain what is being imported here?
-import { getPosts, getUsers, usePostCollection, getLoggedInUser, createPost } from "./data/DataManager.js"
+import { deletePost, getPosts, getUsers, usePostCollection, getLoggedInUser, createPost } from "./data/DataManager.js"
 import{PostList} from "./feed/PostList.js";
 import { NavBar } from "./nav/NavBar.js";
 import{Footer} from"./nav/Footer.js";
@@ -65,6 +65,18 @@ applicationElement.addEventListener("change", event => {
 		})
 	}
   })
+
+//   I added this part while watching Brenda do it on Monday the 23rd... it is also in the instructions
+  applicationElement.addEventListener("click", event => {
+	event.preventDefault();
+	if (event.target.id.startsWith("delete")) {
+	  const postId = event.target.id.split("__")[1];
+	  deletePost(postId)
+		.then(response => {
+		  showPostList();
+		})
+	}
+})
   
   const showFilteredPosts = (year) => {
 	//get a copy of the post collection

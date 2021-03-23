@@ -42,6 +42,7 @@ export const getLoggedInUser = () => {
   return {...loggedInUser};
 }
 
+
 // method that will delete an item from the database
 export const deletePost = postId => {
   return fetch(`http://localhost:8088/posts/${postId}`, {
@@ -49,6 +50,26 @@ export const deletePost = postId => {
       headers: {
           "Content-Type": "application/json"
       }
+
+  })
+      .then(response => response.json())
+      .then(getPosts)
+}
+
+//get a single post from the database
+export const getSinglePost = (postId) => {
+  return fetch(`http://localhost:8088/posts/${postId}`)
+    .then(response => response.json())
+}
+
+//updates the database
+export const updatePost = postObj => {
+  return fetch(`http://localhost:8088/posts/${postObj.id}`, {
+      method: "PUT",
+      headers: {
+          "Content-Type": "application/json"
+      },
+      body: JSON.stringify(postObj)
 
   })
       .then(response => response.json())

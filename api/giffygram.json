@@ -14,6 +14,22 @@
       "userId": 1,
       "timestamp": 1616517776306,
       "id": 1
+    },
+    {
+      "title": "Dow......n she goes",
+      "imageURL": "https://media.giphy.com/media/IYte12qWWgCt2/giphy.gif",
+      "description": "wait 4 it",
+      "userId": 1,
+      "timestamp": 1616519747497,
+      "id": 2
+    },
+    {
+      "title": "Up Side... Down",
+      "imageURL": "https://media.giphy.com/media/tyvfa6hnlKX7y/giphy.gif",
+      "description": "oops",
+      "userId": 1,
+      "timestamp": 1616521774864,
+      "id": 3
     }
   ],
   "likes": [],

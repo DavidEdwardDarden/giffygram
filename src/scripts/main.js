@@ -5,7 +5,9 @@
 
 
 // Can you explain what is being imported here?
-import { deletePost, getSinglePost, getPosts, getUsers, usePostCollection, getLoggedInUser, createPost } from "./data/DataManager.js"
+
+import { deletePost, getSinglePost, getPosts, getUsers, logoutUser, usePostCollection, getLoggedInUser, createPost } from "./data/DataManager.js"
+
 import{PostList} from "./feed/PostList.js";
 import { NavBar } from "./nav/NavBar.js";
 import{Footer} from"./nav/Footer.js";
@@ -79,6 +81,14 @@ applicationElement.addEventListener("change", event => {
 	}
 })
   
+//logout user
+applicationElement.addEventListener("click", event => {
+	if (event.target.id === "logout") {
+	  logoutUser();
+	  console.log(getLoggedInUser());
+	}
+  })
+
   const showFilteredPosts = (year) => {
 	//get a copy of the post collection
 	const epoch = Date.parse(`01/01/${year}`);
@@ -115,6 +125,24 @@ const showPostEntry = () => {
 	const entryElement = document.querySelector(".entryForm");
 	entryElement.innerHTML = PostEntry();
   }
+
+//   invoke checkForUser
+//   If there is a user, set the user in the DataManager (write a function to set the user)
+//   If there is a user, invoke startGiffyGram
+//   If there is not a user, show login/register
+
+  const checkForUser = () => {
+	if (sessionStorage.getItem("user")){
+	  //this is expecting an object. Need to fix
+		setLoggedInUser(JSON.parse(sessionStorage.getItem("user")));
+	  startGiffyGram();
+	}else {
+	  //show login/register
+	  console.log("showLogin")
+	}
+  }
+
+
 
 /*
 	This function performs one, specific task.
@@ -174,4 +202,4 @@ applicationElement.addEventListener("click", event => {
   })
 
 // Are you defining the function here or invoking it?
-startGiffyGram();
+checkForUser();

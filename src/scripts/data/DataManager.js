@@ -11,14 +11,14 @@ export const usePostCollection = () => {
   //The spread operator makes this quick work
   return [...postCollection];
 }
-export const getPosts = () => {
-  return fetch("http://localhost:8088/posts")
-    .then(response => response.json())
-    .then(parsedResponse => {
-      postCollection = parsedResponse
-      return parsedResponse;
-    })
-}
+// export const getPosts = () => {
+//   return fetch("http://localhost:8088/posts")
+//     .then(response => response.json())
+//     .then(parsedResponse => {
+//       postCollection = parsedResponse
+//       return parsedResponse;
+//     })
+// }
 
 export const createPost = postObj => {
   return fetch("http://localhost:8088/posts", {
@@ -65,6 +65,7 @@ export const deletePost = postId => {
 // The second step was to write a function to set the user in the DataManger
 export const setLoggedInUser = (userObj) => {
   loggedInUser = userObj;
+}
 
 //get a single post from the database
 export const getSinglePost = (postId) => {
@@ -86,7 +87,7 @@ export const updatePost = postObj => {
       .then(getPosts)
 
 }
-}
+
 
 
 // a function that requests the user information from the database. 
@@ -141,3 +142,4 @@ export const getPosts = () => {
       return parsedResponse;
     })
 }
+

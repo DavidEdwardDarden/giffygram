@@ -4,6 +4,11 @@
       "id": 1,
       "name": "Brenda",
       "email": "expert@expert.com"
+    },
+    {
+      "name": "bob",
+      "email": "bob@bob.com",
+      "id": 2
     }
   ],
   "posts": [

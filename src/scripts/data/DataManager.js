@@ -32,7 +32,7 @@ export const createPost = postObj => {
       .then(response => response.json())
 }
 
-const loggedInUser = {
+let loggedInUser = {
   id: 1,
   name: "David",
   email: "david@webdevpro.com"
@@ -40,6 +40,10 @@ const loggedInUser = {
 
 export const getLoggedInUser = () => {
   return {...loggedInUser};
+}
+
+export const logoutUser = () => {
+  loggedInUser = {}
 }
 
 // method that will delete an item from the database
@@ -53,4 +57,9 @@ export const deletePost = postId => {
   })
       .then(response => response.json())
       .then(getPosts)
+}
+
+// The second step was to write a function to set the user in the DataManger
+export const setLoggedInUser = (userObj) => {
+  loggedInUser = userObj;
 }

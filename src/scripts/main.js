@@ -6,13 +6,14 @@
 
 // Can you explain what is being imported here?
 
-import { deletePost, getSinglePost, getPosts, getUsers, logoutUser, usePostCollection, getLoggedInUser, createPost } from "./data/DataManager.js"
+import { deletePost, getSinglePost, getPosts, updatePost, getUsers, logoutUser, usePostCollection, getLoggedInUser, createPost } from "./data/DataManager.js"
 
 import{PostList} from "./feed/PostList.js";
 import { NavBar } from "./nav/NavBar.js";
 import{Footer} from"./nav/Footer.js";
 import { PostEntry } from "./feed/PostEntry.js";
 import {PostEdit} from "./feed/PostEdit.js"
+import {RegisterForm} from "./auth/RegisterForm.js"
 
 const applicationElement = document.querySelector(".giffygram");
 const footerElement = document.querySelector("footer");
@@ -131,16 +132,6 @@ const showPostEntry = () => {
 //   If there is a user, invoke startGiffyGram
 //   If there is not a user, show login/register
 
-  const checkForUser = () => {
-	if (sessionStorage.getItem("user")){
-	  //this is expecting an object. Need to fix
-		setLoggedInUser(JSON.parse(sessionStorage.getItem("user")));
-	  startGiffyGram();
-	}else {
-	  //show login/register
-	  console.log("showLogin")
-	}
-  }
 
 
 
@@ -200,6 +191,95 @@ applicationElement.addEventListener("click", event => {
 		})
 	}
   })
+
+  
+//   We can now finish the conditional in the checkForUser 
+// function and write a function to display the LoginForm and
+//  RegisterForm.
+  const checkForUser = () => {
+	if (sessionStorage.getItem("user")){
+		setLoggedInUser(JSON.parse(sessionStorage.getItem("user")));
+	  startGiffyGram();
+	}else {
+		 showLoginRegister();
+	}
+}
+
+const showLoginRegister = () => {
+	showNavBar();
+	const entryElement = document.querySelector(".entryForm");
+	//template strings can be used here too
+	entryElement.innerHTML = `${LoginForm()} <hr/> <hr/> ${RegisterForm()}`;
+	//make sure the post list is cleared out too
+  const postElement = document.querySelector(".postList");
+  postElement.innerHTML = "";
+}
+
+
+// User completes login form
+// Click submit button
+// Collect the user information into an object
+// Use GET to call the database looking for a user
+// If a matching user returns, setLoggedInUser in the DataManager AND
+// Set the user in the sessionStorage
+// Invoke startGiffyGram
+// If no user found in DB, let the user know they should register.
+applicationElement.addEventListener("click", event => {
+	event.preventDefault();
+	if (event.target.id === "login__submit") {
+	  //collect all the details into an object
+	  const userObject = {
+		name: document.querySelector("input[name='name']").value,
+		email: document.querySelector("input[name='email']").value
+	  }
+	  loginUser(userObject)
+	  .then(dbUserObj => {
+		if(dbUserObj){
+		  sessionStorage.setItem("user", JSON.stringify(dbUserObj));
+		  startGiffyGram();
+		}else {
+		  //got a false value - no user
+		  const entryElement = document.querySelector(".entryForm");
+		  entryElement.innerHTML = `<p class="center">That user does not exist. Please try again or register for your free account.</p> ${LoginForm()} <hr/> <hr/> ${RegisterForm()}`;
+		}
+	  })
+	}
+  })
+
+
+//   User completes register form
+// Click submit button
+// Collect the user information into an object
+// Use POST with the user object to add the user to the database.
+// Use the response to setLoggedInUser in the DataManager AND
+// Set the user in the sessionStorage
+// Invoke startGiffyGram
+  applicationElement.addEventListener("click", event => {
+	event.preventDefault();
+	if (event.target.id === "register__submit") {
+	  //collect all the details into an object
+	  const userObject = {
+		name: document.querySelector("input[name='registerName']").value,
+		email: document.querySelector("input[name='registerEmail']").value
+	  }
+	  registerUser(userObject)
+	  .then(dbUserObj => {
+		sessionStorage.setItem("user", JSON.stringify(dbUserObj));
+		startGiffyGram();
+	  })
+	}
+  })
+
+//Be sure to clear the sessionStorage and invoke checkForUser to re-render the app.
+  applicationElement.addEventListener("click", event => {
+	if (event.target.id === "logout") {
+	  logoutUser();
+	  console.log(getLoggedInUser());
+	  sessionStorage.clear();
+	  checkForUser();
+	}
+  })
+
 
 // Are you defining the function here or invoking it?
 checkForUser();

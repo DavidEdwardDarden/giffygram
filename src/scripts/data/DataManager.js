@@ -42,9 +42,11 @@ export const getLoggedInUser = () => {
   return {...loggedInUser};
 }
 
+
 export const logoutUser = () => {
   loggedInUser = {}
 }
+
 
 // method that will delete an item from the database
 export const deletePost = postId => {
@@ -59,7 +61,28 @@ export const deletePost = postId => {
       .then(getPosts)
 }
 
+
 // The second step was to write a function to set the user in the DataManger
 export const setLoggedInUser = (userObj) => {
   loggedInUser = userObj;
+
+//get a single post from the database
+export const getSinglePost = (postId) => {
+  return fetch(`http://localhost:8088/posts/${postId}`)
+    .then(response => response.json())
+}
+
+//updates the database
+export const updatePost = postObj => {
+  return fetch(`http://localhost:8088/posts/${postObj.id}`, {
+      method: "PUT",
+      headers: {
+          "Content-Type": "application/json"
+      },
+      body: JSON.stringify(postObj)
+
+  })
+      .then(response => response.json())
+      .then(getPosts)
+
 }

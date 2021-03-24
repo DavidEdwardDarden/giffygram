@@ -5,11 +5,14 @@
 
 
 // Can you explain what is being imported here?
-import { deletePost, getPosts, getUsers, logoutUser, usePostCollection, getLoggedInUser, createPost } from "./data/DataManager.js"
+
+import { deletePost, getSinglePost, getPosts, getUsers, logoutUser, usePostCollection, getLoggedInUser, createPost } from "./data/DataManager.js"
+
 import{PostList} from "./feed/PostList.js";
 import { NavBar } from "./nav/NavBar.js";
 import{Footer} from"./nav/Footer.js";
 import { PostEntry } from "./feed/PostEntry.js";
+import {PostEdit} from "./feed/PostEdit.js"
 
 const applicationElement = document.querySelector(".giffygram");
 const footerElement = document.querySelector("footer");
@@ -152,5 +155,51 @@ const startGiffyGram = () => {
 	showPostList();
 	showFooter();
 }
+
+//get lastes post from database
+applicationElement.addEventListener("click", event => {
+	event.preventDefault();
+	if (event.target.id.startsWith("edit")) {
+	  const postId = event.target.id.split("__")[1];
+	  getSinglePost(postId)
+		.then(response => {
+		  showEdit(response);
+		})
+	}
+  })
+
+  const showEdit = (postObj) => {
+	const entryElement = document.querySelector(".entryForm");
+	entryElement.innerHTML = PostEdit(postObj);
+  }
+
+  applicationElement.addEventListener("click", event => {
+	event.preventDefault();
+	if (event.target.id.startsWith("updatePost")) {
+	  const postId = event.target.id.split("__")[1];
+	  //collect all the details into an object
+	  const title = document.querySelector("input[name='postTitle']").value
+	  const url = document.querySelector("input[name='postURL']").value
+	  const description = document.querySelector("textarea[name='postDescription']").value
+	  const timestamp = document.querySelector("input[name='postTime']").value
+	  
+	  const postObject = {
+		title: title,
+		imageURL: url,
+		description: description,
+		userId: getLoggedInUser().id,
+		timestamp: parseInt(timestamp),
+		id: parseInt(postId)
+	  }
+	//get rid of the form
+	  showPostEntry();
+
+	  updatePost(postObject)
+		.then(response => {
+		  showPostList();
+		})
+	}
+  })
+
 // Are you defining the function here or invoking it?
 checkForUser();

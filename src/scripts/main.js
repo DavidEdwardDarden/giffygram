@@ -6,8 +6,8 @@
 
 // Can you explain what is being imported here?
 
-import { deletePost, getSinglePost, getPosts, updatePost, getUsers, logoutUser, usePostCollection, getLoggedInUser, createPost } from "./data/DataManager.js"
-
+import { loginUser,deletePost, getSinglePost, registerUser, getPosts, updatePost, getUsers, logoutUser, usePostCollection, getLoggedInUser, createPost } from "./data/DataManager.js"
+import {LoginForm} from "./auth/LoginForm.js"
 import{PostList} from "./feed/PostList.js";
 import { NavBar } from "./nav/NavBar.js";
 import{Footer} from"./nav/Footer.js";

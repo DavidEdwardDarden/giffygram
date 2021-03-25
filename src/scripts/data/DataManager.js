@@ -128,6 +128,13 @@ export const registerUser = (userObj) => {
   })
 }
 
+// We can query this table and request all items with a specific postID 
+// to find out the number of likes. Remember, json-server will return an array.
+export const getLikes = (postId) => {
+  return fetch(`http://localhost:8088/userLikes?postId=${postId}`)
+    .then(response => response.json())
+}
+
 
 // Now that we have multiple users, we want to know the author
 //  of a post. Refactor the getPosts method and use the json-server 
@@ -141,5 +148,17 @@ export const getPosts = () => {
       postCollection = parsedResponse
       return parsedResponse;
     })
+}
+
+export const postLike = likeObject => {
+  return fetch(`http://localhost:8088/userLikes`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(likeObject)
+  })
+  .then(response => response.json())
+  .then(getPosts)
 }
 

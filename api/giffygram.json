@@ -6,9 +6,9 @@
       "email": "expert@expert.com"
     },
     {
+      "id": 2,
       "name": "bob",
-      "email": "bob@bob.com",
-      "id": 2
+      "email": "bob@bob.com"
     }
   ],
   "posts": [
@@ -35,6 +35,14 @@
       "userId": 1,
       "timestamp": 1616521774864,
       "id": 3
+    },
+    {
+      "title": "Dance Party!",
+      "imageURL": "https://media.giphy.com/media/DhstvI3zZ598Nb1rFf/giphy.gif",
+      "description": "Real smooth",
+      "userId": 2,
+      "timestamp": 1616694874178,
+      "id": 4
     }
   ],
   "likes": [],
@@ -43,6 +51,13 @@
       "id": 1,
       "content": "Hello World",
       "sender": 1
+    }
+  ],
+  "userLikes": [
+    {
+      "postId": "1",
+      "userId": 1,
+      "id": 1
     }
   ]
 }

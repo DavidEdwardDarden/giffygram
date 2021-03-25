@@ -6,7 +6,7 @@
 
 // Can you explain what is being imported here?
 
-import { loginUser,deletePost, getSinglePost, registerUser, getPosts, updatePost, getUsers, logoutUser, usePostCollection, getLoggedInUser, createPost } from "./data/DataManager.js"
+import { loginUser,deletePost, postLike, setLoggedInUser, getSinglePost, registerUser, getPosts, updatePost, getUsers, logoutUser, usePostCollection, getLoggedInUser, createPost } from "./data/DataManager.js"
 import {LoginForm} from "./auth/LoginForm.js"
 import{PostList} from "./feed/PostList.js";
 import { NavBar } from "./nav/NavBar.js";
@@ -215,6 +215,20 @@ const showLoginRegister = () => {
   postElement.innerHTML = "";
 }
 
+//not in instructions... Brenda posted this in slack
+applicationElement.addEventListener("click", event => {
+	event.preventDefault();
+	if (event.target.id.startsWith("like")) {
+	  const likeObject = {
+		 postId: event.target.id.split("__")[1],
+		 userId: getLoggedInUser().id
+	  }
+	  postLike(likeObject)
+		.then(response => {
+		  showPostList();
+		})
+	}
+  })
 
 // User completes login form
 // Click submit button

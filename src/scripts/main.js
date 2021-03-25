@@ -215,9 +215,10 @@ const showLoginRegister = () => {
   postElement.innerHTML = "";
 }
 
-//not in instructions... Brenda posted this in slack
+//now in instructions... Brenda posted this in slack
 applicationElement.addEventListener("click", event => {
 	event.preventDefault();
+	console.log(event.target.id);
 	if (event.target.id.startsWith("like")) {
 	  const likeObject = {
 		 postId: event.target.id.split("__")[1],
